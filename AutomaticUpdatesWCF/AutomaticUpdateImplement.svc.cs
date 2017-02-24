@@ -5,6 +5,7 @@ using System.Linq;
 using System.ServiceModel.Activation;
 using System.Text;
 using System.Transactions;
+using LogCommon;
 
 namespace AutomaticUpdatesWCF
 {
@@ -63,20 +64,19 @@ namespace AutomaticUpdatesWCF
             {
                 return AppList.FirstOrDefault(o => o.AppName == applicationName);
             }
-            else if(File.Exists(appInfoXMLPath + applicationName + ".txt"))
+            if(File.Exists(appInfoXMLPath + applicationName + ".txt"))
             {              
-                    var getTxtString = File.ReadAllText(appInfoXMLPath + applicationName + ".txt", Encoding.Default);
-                    var appEntity = FileProcessingHelper.GetTFromXML<ApplicationEntity>(getTxtString);
-                    if (appEntity != null)
-                    {
+                var getTxtString = File.ReadAllText(appInfoXMLPath + applicationName + ".txt", Encoding.Default);
+                var appEntity = FileProcessingHelper.GetTFromXML<ApplicationEntity>(getTxtString);
+                if (appEntity != null)
+                {
                     AppList = new List<ApplicationEntity>();
-                        AppList.Add(appEntity);
-                        return appEntity;
-                    }
+                    AppList.Add(appEntity);
+                    return appEntity;
+                }
                 return new ApplicationEntity();
             }
-            else
-                return new ApplicationEntity();
+            return new ApplicationEntity();
         }
 
         /// <summary>
@@ -135,6 +135,9 @@ namespace AutomaticUpdatesWCF
         public DlFileResult DownLoadFile(DlFile dlfile)
         {
             string path = FileProcessingHelper.GetUpLoadFilePath() + dlfile.ProjectName + "\\" + dlfile.FileName;
+            DlFileResult file = new DlFileResult();
+            try
+            {     
             if (!File.Exists(path))
             {
                 var result = new DlFileResult();
@@ -143,8 +146,7 @@ namespace AutomaticUpdatesWCF
                 result.Message = "";
                 result.FileStream = new MemoryStream();
                 return result;
-            }
-            DlFileResult file = new DlFileResult();
+            }          
             file.FileStream = new MemoryStream();
             Stream ms = new MemoryStream();
             FileStream fs = new FileStream(path, FileMode.Open, FileAccess.Read);
@@ -155,6 +157,12 @@ namespace AutomaticUpdatesWCF
             file.IsSuccess = true;
             fs.Flush();
             fs.Close();
+            }
+            catch (Exception ex)
+            {
+                MyLog4NetInfo.ErrorInfo(string.Format("下载文件报错,文件名称:{0},错误消息:{1},错误堆栈{2},错误实例{3}", dlfile.FileName, ex.Message, ex.StackTrace, ex.InnerException));
+                throw;
+            }
             return file;
         }
 
@@ -166,16 +174,24 @@ namespace AutomaticUpdatesWCF
         public UpFileResult UpLoadFile(UpFile file)
         {
             byte[] buffer = new byte[file.Size];
-            FileStream fs = new FileStream(path + file.ProjectName + file.FileName, FileMode.Create, FileAccess.Write);
-            int count = 0;
-
-            while ((count = file.FileStream.Read(buffer, 0, buffer.Length)) > 0)
+            try
             {
-                fs.Write(buffer, 0, count);
+                FileStream fs = new FileStream(path + file.ProjectName + file.FileName, FileMode.Create,
+                    FileAccess.Write);
+                int count = 0;
+                while ((count = file.FileStream.Read(buffer, 0, buffer.Length)) > 0)
+                {
+                    fs.Write(buffer, 0, count);
+                }
+                fs.Flush();
+                fs.Close();
             }
-
-            fs.Flush();
-            fs.Close();
+            catch (Exception ex)
+            {
+                MyLog4NetInfo.ErrorInfo(string.Format("上传文件出错,文件名:{0},错误消息:{1},错误堆栈：{2},错误实例:{3}",file.FileName,ex.Message,ex.StackTrace,ex.InnerException));
+                throw;
+            }
+            
             return new UpFileResult(true, "");
         }
     
@@ -187,15 +203,17 @@ namespace AutomaticUpdatesWCF
         /// <returns></returns>
         public bool DirIsExistOrCreate(string dirName, string projectName)
         {
-            if (!Directory.Exists(path + projectName + "\\" + dirName))
+            var currentPath = path + projectName + "\\" + dirName;
+            if (!Directory.Exists(currentPath))
             {
                 try
                 {
-                    Directory.CreateDirectory(path + projectName + "\\" + dirName);
+                    Directory.CreateDirectory(currentPath);
                     return true;
                 }
                 catch (Exception ex)
                 {
+                    MyLog4NetInfo.ErrorInfo(string.Format("创建文件夹:{0} 错误,错误信息:{1},错误堆栈:{2},错误实例:{3}",currentPath,ex.Message,ex.StackTrace,ex.InnerException));
                     return false;
                 }
             }
@@ -278,6 +296,7 @@ namespace AutomaticUpdatesWCF
                 }
                 catch(Exception ex)
                 {
+                    MyLog4NetInfo.ErrorInfo(string.Format("调用方法UpdateAppInfo报错，错误信息:{0}，错误堆栈:{1},错误实例:{2}",ex.Message,ex.StackTrace,ex.InnerException));
                     writeTxt(ex.ToString());
                 }
                
@@ -299,21 +318,42 @@ namespace AutomaticUpdatesWCF
 
         public bool DeleteAppInfo(string appName)
         {
+            MyLog4NetInfo.LogInfo("调用方法：DeleteAppInfo，准备删除项目："+appName);
             if (AppList != null && AppList.Any() && AppList.Any(o => o.AppName == appName))
             {
                 using (var transactionScope=new TransactionScope())
                 {
                     //删除内存中的数据
                    var effectCount=AppList.RemoveAll(o => o.AppName == appName);
+                    MyLog4NetInfo.LogInfo(string.Format("删除内存中项目:{0}的数据，删除{1}！",appName,effectCount>0?"成功":"失败"));
+
                     //删除info下的txt
                     File.Delete(FileProcessingHelper.AppInfoXMLPath() + appName + ".txt");
+                    MyLog4NetInfo.LogInfo(string.Format("删除项目：{0} 在AppInfo文件夹下的txt文件",appName));
+
                     //删除upload下的文件夹
-                    FileProcessingHelper.DeleteDir(FileProcessingHelper.GetUpLoadFilePath() + appName);
-                    if(effectCount>0)
-                    transactionScope.Complete();
+                   var deleteResult=FileProcessingHelper.DeleteDir(FileProcessingHelper.GetUpLoadFilePath() + appName);
+                    MyLog4NetInfo.LogInfo(string.Format("删除项目：{0} 在UpLoadFile文件夹下的项目文件，删除{1}！",appName, deleteResult?"成功":"失败"));
+
+                    if (effectCount > 0)
+                        transactionScope.Complete();
+                    MyLog4NetInfo.LogInfo(string.Format("调用方法：DeleteAppInfo，删除项目{0}，最终删除结果：{1}",appName,effectCount>0?"成功":"失败"));
                 }
             }
             return false;
+        }
+
+        /// <summary>
+        /// 记录日志
+        /// </summary>
+        /// <param name="message">日志内容</param>
+        /// <param name="isLog">true为日志,false为错误日志</param>
+        public void WriteLog(string message,bool isLog)
+        {
+            if(isLog)
+            MyLog4NetInfo.LogInfo(message);
+            else
+            MyLog4NetInfo.ErrorInfo(message);
         }
     }
 }

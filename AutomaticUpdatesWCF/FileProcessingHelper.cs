@@ -25,7 +25,6 @@ namespace AutomaticUpdatesWCF
             string path = AppDomain.CurrentDomain.BaseDirectory + "\\AppInfo\\";
             if (!Directory.Exists(path))
                 Directory.CreateDirectory(path);
-            MyLog4NetInfo.LogInfo("wcf写入xml路径："+path);
             return path;
         }
 
@@ -61,8 +60,9 @@ namespace AutomaticUpdatesWCF
                 Directory.Delete(path);
                 return true;
             }
-            catch (Exception)
+            catch (Exception ex)
             {
+                MyLog4NetInfo.ErrorInfo(string.Format("删除报错,当前删除路径{0},错误消息:{1},错误堆栈{2},错误实例{3}",path,ex.Message,ex.StackTrace,ex.InnerException));
                 return false;
             }
         }
@@ -167,7 +167,7 @@ namespace AutomaticUpdatesWCF
                 }
                 catch (Exception ex)
                 {
-                   MyLog4NetInfo.LogInfo("反序列化报错，错误信息："+ex.Message);
+                   MyLog4NetInfo.LogInfo(string.Format("反序列化报错，错误XML:{0},错误信息:{1},错误堆栈:{2},错误实例:{3}",xml,ex.Message,ex.StackTrace,ex.InnerException));
                 }
                
             }
@@ -190,7 +190,6 @@ namespace AutomaticUpdatesWCF
             var pdfFilesPath = AppInfoXMLPath();
             DirectoryInfo folder = new DirectoryInfo(pdfFilesPath);
             var temp = folder.GetFiles(fileFormat);
-            MyLog4NetInfo.LogInfo("appInfo里文件个数:"+temp.Length);
             var fileDataList = new List<string>();
             if (temp != null && temp.Any())
                 temp.ToList().ForEach(c =>

@@ -780,6 +780,9 @@ namespace MemexUpdateCommon.ServiceReference1 {
         
         [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForce", ReplyAction="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForceResponse")]
         System.Collections.Generic.List<MemexUpdateCommon.ServiceReference1.ApplicationEntity> GetAppListFromTxtForce();
+        
+        [System.ServiceModel.OperationContractAttribute(Action="http://tempuri.org/IAutomaticUpdateServer/WriteLog", ReplyAction="http://tempuri.org/IAutomaticUpdateServer/WriteLogResponse")]
+        void WriteLog(string message, bool isLog);
     }
     
     [System.Diagnostics.DebuggerStepThroughAttribute()]
@@ -979,6 +982,10 @@ namespace MemexUpdateCommon.ServiceReference1 {
         
         public System.Collections.Generic.List<MemexUpdateCommon.ServiceReference1.ApplicationEntity> GetAppListFromTxtForce() {
             return base.Channel.GetAppListFromTxtForce();
+        }
+        
+        public void WriteLog(string message, bool isLog) {
+            base.Channel.WriteLog(message, isLog);
         }
     }
 }

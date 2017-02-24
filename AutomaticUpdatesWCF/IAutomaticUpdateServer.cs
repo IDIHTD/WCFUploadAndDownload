@@ -72,7 +72,12 @@ namespace AutomaticUpdatesWCF
         [OperationContract]
         List<ApplicationEntity> GetAppListFromTxtForce();
 
-
+        /// <summary>
+        /// 调用WCF服务写入日志
+        /// </summary>
+        /// <param name="message"></param>
+        [OperationContract]
+        void WriteLog(string message,bool isLog);
 
         // TODO: 在此添加您的服务操作
     }

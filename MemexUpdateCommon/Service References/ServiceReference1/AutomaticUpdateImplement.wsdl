@@ -98,6 +98,12 @@
   <wsdl:message name="IAutomaticUpdateServer_GetAppListFromTxtForce_OutputMessage">
     <wsdl:part name="parameters" element="tns:GetAppListFromTxtForceResponse" />
   </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_WriteLog_InputMessage">
+    <wsdl:part name="parameters" element="tns:WriteLog" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_WriteLog_OutputMessage">
+    <wsdl:part name="parameters" element="tns:WriteLogResponse" />
+  </wsdl:message>
   <wsdl:portType name="IAutomaticUpdateServer">
     <wsdl:operation name="GetVersionByApplicationName">
       <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetVersionByApplicationName" message="tns:IAutomaticUpdateServer_GetVersionByApplicationName_InputMessage" />
@@ -146,6 +152,10 @@
     <wsdl:operation name="GetAppListFromTxtForce">
       <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForce" message="tns:IAutomaticUpdateServer_GetAppListFromTxtForce_InputMessage" />
       <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForceResponse" message="tns:IAutomaticUpdateServer_GetAppListFromTxtForce_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="WriteLog">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/WriteLog" message="tns:IAutomaticUpdateServer_WriteLog_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/WriteLogResponse" message="tns:IAutomaticUpdateServer_WriteLog_OutputMessage" />
     </wsdl:operation>
   </wsdl:portType>
   <wsdl:binding name="BasicHttpBinding_IAutomaticUpdateServer" type="tns:IAutomaticUpdateServer">
@@ -261,6 +271,15 @@
     </wsdl:operation>
     <wsdl:operation name="GetAppListFromTxtForce">
       <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="WriteLog">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/WriteLog" style="document" />
       <wsdl:input>
         <soap:body use="literal" />
       </wsdl:input>

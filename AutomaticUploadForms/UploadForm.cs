@@ -15,6 +15,7 @@ namespace AutomaticUploadForms
         public UploadForm()
         {
             InitializeComponent();
+            GetFilesFromTxtForce();
         }  
        
         /// <summary>
@@ -42,11 +43,18 @@ namespace AutomaticUploadForms
             progressBar1.Visible = true;
             label4.Visible=true;
             richTextBox1.Text += "开始上传,项目名称:" + textBox3.Text + ", 版本号:" + txtBoxProjectVersion.Text+"\n";
+           
             if (uploadFiles != null && uploadFiles.MDir != null&&uploadFiles.FileCount>0)
             {
+                
                 MemexUpateHelper.DeleteAppInfo(textBox3.Text);
+
                 MemexUpateHelper.DeleteFile(textBox3.Text);
-                    StartUploadFile(uploadFiles.MDir);
+
+                MemexUpateHelper.WriteLog(string.Format("开始上传项目:{0},版本号{1},项目路径:{2}", textBox3.Text,txtBoxProjectVersion.Text,txtBoxLoadPath.Text),true);
+
+                StartUploadFile(uploadFiles.MDir);
+                MemexUpateHelper.WriteLog(string.Format("上传项目{0} 结束",textBox3.Text),true);
                 var appParams = new ApplicationInfo { AppName = textBox3.Text, AppVersion = txtBoxProjectVersion.Text, AppPath = txtBoxLoadPath.Text };
 
                 //设置刚上传的项目信息时应该先更新IIS内存中项目信息列表
@@ -132,7 +140,11 @@ namespace AutomaticUploadForms
             {
                 var listDifferent = MemexUpateHelper.GetDifferentFiles(serverApp.MDir, clientApp.MDir);
                 if (listDifferent != null && listDifferent.ToList().Any())
-                    StartDownFiles(listDifferent);
+                {
+                    MemexUpateHelper.WriteLog(string.Format("开始下载项目：{0}的文件", textBox1.Text),true);
+                    StartDownFiles(listDifferent);    
+                    MemexUpateHelper.WriteLog(string.Format("下载项目：{0}的文件结束",textBox1.Text),true);       
+                }
                 MessageBox.Show("完成！");
             }
            else
@@ -171,8 +183,9 @@ namespace AutomaticUploadForms
                     fs.Flush();
                     fs.Close();
                 }
-                catch (Exception e1)
+                catch (Exception ex)
                 { 
+                   MemexUpateHelper.WriteLog(string.Format("下载文件:{0}，出错误，错误信息:{1},错误堆栈:{2},错误实例:{3}",file.FilName,ex.Message,ex.StackTrace,ex.InnerException),false);
                 }
                 finally {
                     ((IDisposable)fs).Dispose();
@@ -245,9 +258,11 @@ namespace AutomaticUploadForms
         private void btnDelete_Click(object sender, EventArgs e)
         {
            var appName= this.dataGridView1.CurrentCell.Value;
+            MemexUpateHelper.WriteLog(string.Format("开始删除项目:{0}，删除内存、txt、对应的文件",appName),true);
             GetFilesFromTxtForce();
             MemexUpateHelper.DeleteAppInfo(appName.ToString());
             GetFilesFromTxtForce();
+            MemexUpateHelper.WriteLog(string.Format("删除项目{0}结束,删除内存、txt、对应的文件",appName),true);
         }
     }
 }

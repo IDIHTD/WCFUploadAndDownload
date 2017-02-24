@@ -197,5 +197,24 @@ namespace MemexUpdateCommon
         {
             return channel.DeleteAppInfo(appName);
         }
+
+       /// <summary>
+       /// 将日志写入到服务端
+       /// </summary>
+       /// <param name="message">日志内容</param>
+       /// <param name="isLog">true为日志,false为错误日志</param>
+       public static void WriteLog(string message,bool isLog)
+       {
+           channel.WriteLog(string.Format("调用计算机IP为:{0}",GetLocalIP())+message, isLog);
+       }
+
+        /// <summary>
+        /// 获取本机IP
+        /// </summary>
+        /// <returns></returns>
+       public static string GetLocalIP()
+       {
+           return CommonAction.GetLocalIP();
+       }
     }
 }
