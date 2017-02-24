@@ -1,0 +1,277 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="AutomaticUpdateImplement" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc?xsd=xsd2" namespace="http://schemas.datacontract.org/2004/07/AutomaticUpdatesWCF" />
+      <xsd:import schemaLocation="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc?xsd=xsd3" namespace="http://schemas.microsoft.com/Message" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IAutomaticUpdateServer_GetVersionByApplicationName_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionByApplicationName" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetVersionByApplicationName_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetVersionByApplicationNameResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetServerPublishFiles_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerPublishFiles" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetServerPublishFiles_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetServerPublishFilesResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_SetApplicationInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:SetApplicationInfo" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_SetApplicationInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:SetApplicationInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="DlFile">
+    <wsdl:part name="parameters" element="tns:DlFile" />
+  </wsdl:message>
+  <wsdl:message name="DlFile_Headers">
+    <wsdl:part name="FileName" element="tns:FileName" />
+    <wsdl:part name="ProjectName" element="tns:ProjectName" />
+  </wsdl:message>
+  <wsdl:message name="DlFileResult">
+    <wsdl:part name="parameters" element="tns:DlFileResult" />
+  </wsdl:message>
+  <wsdl:message name="DlFileResult_Headers">
+    <wsdl:part name="IsSuccess" element="tns:IsSuccess" />
+    <wsdl:part name="Message" element="tns:Message" />
+    <wsdl:part name="Size" element="tns:Size" />
+  </wsdl:message>
+  <wsdl:message name="UpFile">
+    <wsdl:part name="parameters" element="tns:UpFile" />
+  </wsdl:message>
+  <wsdl:message name="UpFile_Headers">
+    <wsdl:part name="FileName" element="tns:FileName" />
+    <wsdl:part name="ProjectName" element="tns:ProjectName" />
+    <wsdl:part name="Size" element="tns:Size" />
+  </wsdl:message>
+  <wsdl:message name="UpFileResult">
+    <wsdl:part name="parameters" element="tns:UpFileResult" />
+  </wsdl:message>
+  <wsdl:message name="UpFileResult_Headers">
+    <wsdl:part name="IsSuccess" element="tns:IsSuccess" />
+    <wsdl:part name="Message" element="tns:Message" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DirIsExistOrCreate_InputMessage">
+    <wsdl:part name="parameters" element="tns:DirIsExistOrCreate" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DirIsExistOrCreate_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DirIsExistOrCreateResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetAppList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAppList" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetAppList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAppListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DeleteFile_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFile" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DeleteFile_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteFileResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetDifferentList_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetDifferentList" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetDifferentList_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetDifferentListResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_UpdateAppInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAppInfo" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_UpdateAppInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:UpdateAppInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DeleteAppInfo_InputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAppInfo" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_DeleteAppInfo_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DeleteAppInfoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetAppListFromTxtForce_InputMessage">
+    <wsdl:part name="parameters" element="tns:GetAppListFromTxtForce" />
+  </wsdl:message>
+  <wsdl:message name="IAutomaticUpdateServer_GetAppListFromTxtForce_OutputMessage">
+    <wsdl:part name="parameters" element="tns:GetAppListFromTxtForceResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IAutomaticUpdateServer">
+    <wsdl:operation name="GetVersionByApplicationName">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetVersionByApplicationName" message="tns:IAutomaticUpdateServer_GetVersionByApplicationName_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetVersionByApplicationNameResponse" message="tns:IAutomaticUpdateServer_GetVersionByApplicationName_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetServerPublishFiles">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetServerPublishFiles" message="tns:IAutomaticUpdateServer_GetServerPublishFiles_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetServerPublishFilesResponse" message="tns:IAutomaticUpdateServer_GetServerPublishFiles_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="SetApplicationInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/SetApplicationInfo" message="tns:IAutomaticUpdateServer_SetApplicationInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/SetApplicationInfoResponse" message="tns:IAutomaticUpdateServer_SetApplicationInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DownLoadFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DownLoadFile" name="DlFile" message="tns:DlFile" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DownLoadFileResponse" name="DlFileResult" message="tns:DlFileResult" />
+    </wsdl:operation>
+    <wsdl:operation name="UpLoadFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/UpLoadFile" name="UpFile" message="tns:UpFile" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/UpLoadFileResponse" name="UpFileResult" message="tns:UpFileResult" />
+    </wsdl:operation>
+    <wsdl:operation name="DirIsExistOrCreate">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DirIsExistOrCreate" message="tns:IAutomaticUpdateServer_DirIsExistOrCreate_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DirIsExistOrCreateResponse" message="tns:IAutomaticUpdateServer_DirIsExistOrCreate_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAppList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppList" message="tns:IAutomaticUpdateServer_GetAppList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListResponse" message="tns:IAutomaticUpdateServer_GetAppList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DeleteFile" message="tns:IAutomaticUpdateServer_DeleteFile_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DeleteFileResponse" message="tns:IAutomaticUpdateServer_DeleteFile_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetDifferentList">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetDifferentList" message="tns:IAutomaticUpdateServer_GetDifferentList_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetDifferentListResponse" message="tns:IAutomaticUpdateServer_GetDifferentList_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAppInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/UpdateAppInfo" message="tns:IAutomaticUpdateServer_UpdateAppInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/UpdateAppInfoResponse" message="tns:IAutomaticUpdateServer_UpdateAppInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppInfo">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DeleteAppInfo" message="tns:IAutomaticUpdateServer_DeleteAppInfo_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/DeleteAppInfoResponse" message="tns:IAutomaticUpdateServer_DeleteAppInfo_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="GetAppListFromTxtForce">
+      <wsdl:input wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForce" message="tns:IAutomaticUpdateServer_GetAppListFromTxtForce_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForceResponse" message="tns:IAutomaticUpdateServer_GetAppListFromTxtForce_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IAutomaticUpdateServer" type="tns:IAutomaticUpdateServer">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="GetVersionByApplicationName">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetVersionByApplicationName" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetServerPublishFiles">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetServerPublishFiles" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="SetApplicationInfo">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/SetApplicationInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DownLoadFile">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/DownLoadFile" style="document" />
+      <wsdl:input name="DlFile">
+        <soap:header message="tns:DlFile_Headers" part="FileName" use="literal" />
+        <soap:header message="tns:DlFile_Headers" part="ProjectName" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="DlFileResult">
+        <soap:header message="tns:DlFileResult_Headers" part="IsSuccess" use="literal" />
+        <soap:header message="tns:DlFileResult_Headers" part="Message" use="literal" />
+        <soap:header message="tns:DlFileResult_Headers" part="Size" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpLoadFile">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/UpLoadFile" style="document" />
+      <wsdl:input name="UpFile">
+        <soap:header message="tns:UpFile_Headers" part="FileName" use="literal" />
+        <soap:header message="tns:UpFile_Headers" part="ProjectName" use="literal" />
+        <soap:header message="tns:UpFile_Headers" part="Size" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output name="UpFileResult">
+        <soap:header message="tns:UpFileResult_Headers" part="IsSuccess" use="literal" />
+        <soap:header message="tns:UpFileResult_Headers" part="Message" use="literal" />
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DirIsExistOrCreate">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/DirIsExistOrCreate" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppList">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetAppList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteFile">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/DeleteFile" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetDifferentList">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetDifferentList" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="UpdateAppInfo">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/UpdateAppInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="DeleteAppInfo">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/DeleteAppInfo" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="GetAppListFromTxtForce">
+      <soap:operation soapAction="http://tempuri.org/IAutomaticUpdateServer/GetAppListFromTxtForce" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="AutomaticUpdateImplement">
+    <wsdl:port name="BasicHttpBinding_IAutomaticUpdateServer" binding="tns:BasicHttpBinding_IAutomaticUpdateServer">
+      <soap:address location="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc/IAutomaticUpdateServer" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

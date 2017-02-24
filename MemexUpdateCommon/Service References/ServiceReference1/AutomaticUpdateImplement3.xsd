@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:tns="http://schemas.datacontract.org/2004/07/AutomaticUpdatesWCF" elementFormDefault="qualified" targetNamespace="http://schemas.datacontract.org/2004/07/AutomaticUpdatesWCF" xmlns:xs="http://www.w3.org/2001/XMLSchema">
+  <xs:import schemaLocation="http://mahui.wfdata.cn:60124/AutomaticUpdateImplement.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+  <xs:complexType name="ApplicationEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbsoulateRootPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppVersion" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FileCount" type="xs:int" />
+      <xs:element minOccurs="0" name="MDir" nillable="true" type="tns:MDirs" />
+      <xs:element minOccurs="0" name="RelativePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ApplicationEntity" nillable="true" type="tns:ApplicationEntity" />
+  <xs:complexType name="MDirs">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbsoulateRootPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Dirs" nillable="true" type="tns:ArrayOfMDirs" />
+      <xs:element minOccurs="0" name="Files" nillable="true" type="tns:ArrayOfMFiles" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsForceUpdate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelativePath" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MDirs" nillable="true" type="tns:MDirs" />
+  <xs:complexType name="ArrayOfMDirs">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MDirs" nillable="true" type="tns:MDirs" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMDirs" nillable="true" type="tns:ArrayOfMDirs" />
+  <xs:complexType name="ArrayOfMFiles">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="MFiles" nillable="true" type="tns:MFiles" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfMFiles" nillable="true" type="tns:ArrayOfMFiles" />
+  <xs:complexType name="MFiles">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbsoulateRootPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ExtendName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="IsForceUpdate" type="xs:boolean" />
+      <xs:element minOccurs="0" name="Name" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="RelativePath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Size" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Version" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="MFiles" nillable="true" type="tns:MFiles" />
+  <xs:complexType name="ApplicationInfo">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AppName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="AppVersion" nillable="true" type="xs:string" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ApplicationInfo" nillable="true" type="tns:ApplicationInfo" />
+  <xs:complexType name="ArrayOfApplicationEntity">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="ApplicationEntity" nillable="true" type="tns:ApplicationEntity" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfApplicationEntity" nillable="true" type="tns:ArrayOfApplicationEntity" />
+  <xs:complexType name="ArrayOfDifferentFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" maxOccurs="unbounded" name="DifferentFile" nillable="true" type="tns:DifferentFile" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="ArrayOfDifferentFile" nillable="true" type="tns:ArrayOfDifferentFile" />
+  <xs:complexType name="DifferentFile">
+    <xs:sequence>
+      <xs:element minOccurs="0" name="AbsoulteRootPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ClientFullPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="DiffentValue" type="tns:DifDescription" />
+      <xs:element minOccurs="0" name="FilName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="FullName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ParentName" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="ServiceFullPath" nillable="true" type="xs:string" />
+      <xs:element minOccurs="0" name="Type" type="tns:FileType" />
+    </xs:sequence>
+  </xs:complexType>
+  <xs:element name="DifferentFile" nillable="true" type="tns:DifferentFile" />
+  <xs:simpleType name="DifDescription">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="ForceUpdate">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">1</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FileNotExistInClient">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">2</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FileNotExistInServer">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">3</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DirNotExistInClient">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">4</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="DirNotExistInServer">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">5</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FileSizeInconsistency">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">6</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+      <xs:enumeration value="FileVersionInconsistency">
+        <xs:annotation>
+          <xs:appinfo>
+            <EnumerationValue xmlns="http://schemas.microsoft.com/2003/10/Serialization/">7</EnumerationValue>
+          </xs:appinfo>
+        </xs:annotation>
+      </xs:enumeration>
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="DifDescription" nillable="true" type="tns:DifDescription" />
+  <xs:simpleType name="FileType">
+    <xs:restriction base="xs:string">
+      <xs:enumeration value="File" />
+      <xs:enumeration value="Dir" />
+    </xs:restriction>
+  </xs:simpleType>
+  <xs:element name="FileType" nillable="true" type="tns:FileType" />
+</xs:schema>
