@@ -15,8 +15,8 @@ namespace MemexUpdateCommon
 
         static MemexUpateHelper()
         {
-            // EndpointAddress address = new EndpointAddress("http://168.160.184.95:9113/AutomaticUpdateImplement.svc/IAutomaticUpdateServer");
-            EndpointAddress address = new EndpointAddress("http://10.20.20.40:60124/AutomaticUpdateImplement.svc/IAutomaticUpdateServer");
+             EndpointAddress address = new EndpointAddress("http://168.160.184.95:9113/AutomaticUpdateImplement.svc/IAutomaticUpdateServer");
+            //EndpointAddress address = new EndpointAddress("http://10.20.20.40:60124/AutomaticUpdateImplement.svc/IAutomaticUpdateServer");
             BasicHttpBinding binding = new BasicHttpBinding();
             binding.MaxBufferPoolSize = 2147483647;
             binding.MaxReceivedMessageSize = 2147483647;
